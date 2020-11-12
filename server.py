@@ -7,7 +7,7 @@ from marshmallow_dataclass import class_schema
 from dataclasses import dataclass
 from typing import List
 
-from ..model.movie import *
+from model import Movie
 
 app = Flask(__name__)
 app.config['API_TITLE'] = 'Movies API'
@@ -55,7 +55,7 @@ class Movies(MethodView):
     @blp.response(MovieSchema(many=True))
     def get(self, args, pagination_parameters):
         """List movies"""
-        pagination_parameters.item_count = 0
+        pagination_parameters.item_count = 1
         return [Movie("23434", "Test", 5.0, 120, [], [], [])]
 
 api.register_blueprint(blp)

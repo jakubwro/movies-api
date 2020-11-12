@@ -9,18 +9,6 @@ from marshmallow_dataclass import class_schema
 from utils import format_qurery_string
 from model import Movie
 
-
-def _extract_lambda_ast(f):
-    source_text = inspect.getsource(f)
-    
-    if not source_text:
-        return None
-    source_ast = ast.parse(source_text)
-    return next((node for node in ast.walk(source_ast) if isinstance(node, ast.Lambda)), None)
-
-def is_call_to(node, func_name):
-    return isinstance(node, ast.Call)   
-
 def _extract_lambda(f):
     source_text = inspect.getsource(f)
     source_ast = ast.parse(source_text)
@@ -142,5 +130,3 @@ class MoviesQuery():
         _add_uni_param(params, 'page_size', count)
         _add_uni_param(params, 'page', 1)
         return MoviesQuery(self.api, params)
-
-

@@ -29,7 +29,7 @@ Write filtering predicates as lambda expression:
 query = movies.where(lambda movie: movie.title == "Pacific Rim")
 ```
 
-Constant expresions will be awaluated:
+Constant expresions will be avaluated:
 ```
 query = movies.where(lambda m: ' '.join(['Leonardo', 'DiCaprio']) in m.actors)
 ```

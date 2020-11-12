@@ -80,6 +80,9 @@ class MoviesQuery():
         return format_qurery_string(**self.params)
 
     def __iter__(self):
+        if self.enumerator:
+            return self
+            
         self.enumerator = self.api.aslist(self)
         self.index = 0
         return self
@@ -87,7 +90,6 @@ class MoviesQuery():
     def __next__(self):
         if self.index >= len(self.enumerator):
             raise StopIteration
-        
         self.index += 1
         return self.enumerator[self.index-1]
 
@@ -96,8 +98,8 @@ class MoviesQuery():
             return len(self.enumerator)
         if self.length:
             return self.length
-        
-        return self.api.count(self)
+        self.length = self.api.count(self)
+        return self.length
 
     def where(self, filter: Callable[[Movie], bool]) -> "MoviesQuery":
         params = self.params.copy()
@@ -127,6 +129,7 @@ class MoviesQuery():
 
     def take(self, count: int) -> "MoviesQuery":
         params = self.params.copy()
-        _add_uni_param(params, 'page_size', count)
-        _add_uni_param(params, 'page', 1)
+        # TODO: not working properly :(
+        # _add_uni_param(params, 'page_size', count)
+        # _add_uni_param(params, 'page', 1)
         return MoviesQuery(self.api, params)

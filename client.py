@@ -12,6 +12,9 @@ class MoviesApi():
 
     def aslist(self, query):
         path = f"{self.url}/movies?{query}"
+        print('---')
+        print(path)
+        print('---')
         json = requests.get(path).json()
         movies = MovieSchema(many=True).load(json)
         return movies
@@ -19,4 +22,7 @@ class MoviesApi():
     def count(self, query):
         query = query.take(0)
         path = f"{self.url}/movies?{query}"
+        print('---')
+        print(path)
+        print('---')
         return json.loads(requests.get(path).headers['X-Pagination'])["total"]

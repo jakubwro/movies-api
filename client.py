@@ -17,6 +17,6 @@ class MoviesApi():
         return movies
 
     def count(self, query):
+        query = query.take(0)
         path = f"{self.url}/movies?{query}"
-        print('adf')
         return json.loads(requests.get(path).headers['X-Pagination'])["total"]
